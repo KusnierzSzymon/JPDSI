@@ -15,6 +15,7 @@
 	<label for="id_oprocentowanie">Oprocentowanie: </label>
 	<input id="id_oprocentowanie" type="text" name="oprocentowanie" value="<?php print($oprocentowanie); ?>" /><br />
 	<input type="submit" value="Oblicz" />
+
 </form>	
 
 <?php
