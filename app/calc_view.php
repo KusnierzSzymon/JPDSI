@@ -12,7 +12,6 @@
 	<input id="id_kwota" type="text" name="kwota" value="<?php print($kwota); ?>" /><br />
 	<label for="id_czas">Czas(w miesiacach): </label>
 	<input id="id_czas" type="text" name="czas" value="<?php print($czas); ?>" /><br />
-	
 	<label for="id_oprocentowanie">Oprocentowanie: </label>
 	<input id="id_oprocentowanie" type="text" name="oprocentowanie" value="<?php print($oprocentowanie); ?>" /><br />
 	<input type="submit" value="Oblicz" />
