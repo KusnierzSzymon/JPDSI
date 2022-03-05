@@ -66,5 +66,6 @@ if (empty ( $messages )) { // gdy brak bĹ‚Ä™dĂłw
 // 4. WywoĹ‚anie widoku z przekazaniem zmiennych
 // - zainicjowane zmienne ($messages,$x,$y,$operation,$result)
 //   bÄ™dÄ… dostÄ™pne w doĹ‚Ä…czonym skrypcie
+
 include 'calc_view.php';
 
