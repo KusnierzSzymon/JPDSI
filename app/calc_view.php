@@ -4,17 +4,25 @@
 <head>
 <meta charset="utf-8" />
 <title>Kalkulator pozyczki</title>
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
 </head>
 <body>
+<div style="width:90%; margin: 2em auto;">
+	
+	<a href="<?php print(_APP_ROOT); ?>/app/security/logout.php" class="pure-button pure-button-active">Wyloguj</a>
+</div>
+ 
+<div style="width:90%; margin: 2em auto;">
 
-<form action="<?php print(_APP_URL);?>/app/calc.php" method="post">
+<form action="<?php print(_APP_ROOT);?>/app/calc.php" method="post">
+    <legend>Kalkulator</legend>
 	<label for="id_kwota">Kwota pozyczki: </label>
-	<input id="id_kwota" type="text" name="kwota" value="<?php print($kwota); ?>" /><br />
+	<input id="id_kwota" type="text" name="kwota" value="<?php out($kwota) ?>" /><br />
 	<label for="id_czas">Czas(w miesiacach): </label>
-	<input id="id_czas" type="text" name="czas" value="<?php print($czas); ?>" /><br />
+        <input id="id_czas" type="text" name="czas" value="<?php out($czas) ?>" /><br />
 	<label for="id_oprocentowanie">Oprocentowanie: </label>
-	<input id="id_oprocentowanie" type="text" name="oprocentowanie" value="<?php print($oprocentowanie); ?>" /><br />
-	<input type="submit" value="Oblicz" />
+	<input id="id_oprocentowanie" type="text" name="oprocentowanie" value="<?php out($oprocentowanie) ?>" /><br />
+	<input type="submit" value="Oblicz" class="pure-button pure-button-primary" />
 
 </form>	
 

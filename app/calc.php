@@ -1,23 +1,23 @@
 <?php
-// KONTROLER strony kalkulatora
+
 require_once dirname(__FILE__).'/../config.php';
 
-// W kontrolerze niczego nie wysyĹ‚a siÄ™ do klienta.
-// WysĹ‚aniem odpowiedzi zajmie siÄ™ odpowiedni widok.
-// Parametry do widoku przekazujemy przez zmienne.
 
-// 1. pobranie parametrĂłw
 
-$kwota = $_REQUEST ['kwota'];
-$oprocentowanie = $_REQUEST ['oprocentowanie'];
-$czas = $_REQUEST ['czas'];
+include _ROOT_PATH.'/app/security/check.php';
 
-// 2. walidacja parametrĂłw z przygotowaniem zmiennych dla widoku
+function getParams(&$kwota,&$oprocentowanie,&$czas){
+	$kwota = isset($_REQUEST['kwota']) ? $_REQUEST['kwota'] : null;
+	$oprocentowanie = isset($_REQUEST['oprocentowanie']) ? $_REQUEST['oprocentowanie'] : null;
+	$czas = isset($_REQUEST['czas']) ? $_REQUEST['czas'] : null;	
+}
 
-// sprawdzenie, czy parametry zostaĹ‚y przekazane
+
+
+function validate(&$kwota,&$oprocentowanie,&$czas,&$messages){
 if ( ! (isset($kwota) && isset($oprocentowanie) && isset($czas))) {
 	//sytuacja wystÄ…pi kiedy np. kontroler zostanie wywoĹ‚any bezpoĹ›rednio - nie z formularza
-	$messages [] = 'BĹ‚Ä™dne wywoĹ‚anie aplikacji. Brak jednego z parametrĂłw.';
+   return false;
 }
 
 // sprawdzenie, czy potrzebne wartoĹ›ci zostaĹ‚y przekazane
@@ -32,7 +32,7 @@ if ( $oprocentowanie == "") {
 }
 
 //nie ma sensu walidowaÄ‡ dalej gdy brak parametrĂłw
-if (empty( $messages )) {
+if (count ( $messages ) != 0) return false;
 	
 	// sprawdzenie, czy $x i $y sÄ… liczbami caĹ‚kowitymi
 	if (! is_numeric( $kwota )) {
@@ -45,27 +45,39 @@ if (empty( $messages )) {
         if (! is_numeric( $czas )) {
 		$messages [] = 'Druga wartoĹ›Ä‡ nie jest liczbÄ… caĹ‚kowitÄ…';
 	}
+        
+        if (count ( $messages ) != 0) return false;
+	else return true;
 	
+        
+ }
 
-}
 
-// 3. wykonaj zadanie jeĹ›li wszystko w porzÄ…dku
 
-if (empty ( $messages )) { // gdy brak bĹ‚Ä™dĂłw
+function process(&$kwota,&$oprocentowanie,&$czas,&$messages,&$wynik){
+	global $role;
 	
 	//konwersja parametrĂłw na int
 	$kwota = intval($kwota);
 	$oprocentowanie = floatval($oprocentowanie);
 	$czas = intval($czas);
         $oprocentowanie = round($oprocentowanie,2);
-	//wykonanie operacji
+	
+       
        $wynik = ($kwota + $kwota * ($oprocentowanie/100)) / $czas;
        $wynik = round($wynik,2);
 }
 
-// 4. WywoĹ‚anie widoku z przekazaniem zmiennych
-// - zainicjowane zmienne ($messages,$x,$y,$operation,$result)
-//   bÄ™dÄ… dostÄ™pne w doĹ‚Ä…czonym skrypcie
+$kwota = null;
+$oprocentowanie = null;
+$czas = null;
+$wynik = null;
+$messages = array();
+
+getParams($kwota,$oprocentowanie,$czas);
+if ( validate($kwota,$oprocentowanie,$czas,$messages) ) { 
+	process($kwota,$oprocentowanie,$czas,$messages,$wynik);
+}
 
 include 'calc_view.php';
 
