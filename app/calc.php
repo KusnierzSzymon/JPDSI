@@ -2,9 +2,9 @@
 
 require_once dirname(__FILE__).'/../config.php';
 
+require_once _ROOT_PATH.'/lib/smarty/Smarty.class.php';
 
 
-include _ROOT_PATH.'/app/security/check.php';
 
 function getParams(&$kwota,&$oprocentowanie,&$czas){
 	$kwota = isset($_REQUEST['kwota']) ? $_REQUEST['kwota'] : null;
@@ -36,14 +36,14 @@ if (count ( $messages ) != 0) return false;
 	
 	// sprawdzenie, czy $x i $y sÄ… liczbami caĹ‚kowitymi
 	if (! is_numeric( $kwota )) {
-		$messages [] = 'Pierwsza wartoĹ›Ä‡ nie jest liczbÄ… caĹ‚kowitÄ…';
+		$messages [] = 'Pierwsza wartosc nie jest liczba calkowita';
 	}
 	
 	if (! is_numeric( $oprocentowanie )) {
-		$messages [] = 'Druga wartoĹ›Ä‡ nie jest liczbÄ… ';
+		$messages [] = 'Druga wartosc nie jest liczba calkowita ';
 	}
         if (! is_numeric( $czas )) {
-		$messages [] = 'Druga wartoĹ›Ä‡ nie jest liczbÄ… caĹ‚kowitÄ…';
+		$messages [] = 'Druga wartosc nie jest liczba calkowita…';
 	}
         
         if (count ( $messages ) != 0) return false;
@@ -55,7 +55,7 @@ if (count ( $messages ) != 0) return false;
 
 
 function process(&$kwota,&$oprocentowanie,&$czas,&$messages,&$wynik){
-	global $role;
+	
 	
 	//konwersja parametrĂłw na int
 	$kwota = intval($kwota);
@@ -64,7 +64,7 @@ function process(&$kwota,&$oprocentowanie,&$czas,&$messages,&$wynik){
         $oprocentowanie = round($oprocentowanie,2);
 	
        
-       $wynik = ($kwota + $kwota * ($oprocentowanie/100)) / $czas;
+       $wynik = ($kwota + $kwota * ($oprocentowanie/100)) / (12 * $czas);
        $wynik = round($wynik,2);
 }
 
@@ -79,5 +79,22 @@ if ( validate($kwota,$oprocentowanie,$czas,$messages) ) {
 	process($kwota,$oprocentowanie,$czas,$messages,$wynik);
 }
 
-include 'calc_view.php';
+$smarty = new Smarty();
+
+$smarty->assign('app_url',_APP_URL);
+$smarty->assign('root_path',_ROOT_PATH);
+$smarty->assign('page_title','Kalkulator');
+$smarty->assign('page_description','Profesjonalne szablonowanie kalkulatora oparte na bibliotece Smarty');
+$smarty->assign('page_header','Kalkulator kredytowy');
+
+//pozostaĹ‚e zmienne niekoniecznie muszÄ… istnieÄ‡, dlatego sprawdzamy aby nie otrzymaÄ‡ ostrzeĹĽenia
+$smarty->assign('kwota',$kwota);
+$smarty->assign('oprocentowanie',$oprocentowanie);
+$smarty->assign('czas',$czas);
+$smarty->assign('wynik',$wynik);
+$smarty->assign('messages',$messages);
+
+
+// 5. WywoĹ‚anie szablonu
+$smarty->display(_ROOT_PATH.'/app/calc.html');
 
