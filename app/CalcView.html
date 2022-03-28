@@ -1,4 +1,4 @@
-{extends file="../templates/main.html"}
+{extends file=$conf->root_path|cat:"/templates/main.html"}
 
 {block name=footer}przykladowa tresc stopki wpisana do szablonu glownego z szablonu kalkulatora{/block}
 
@@ -7,7 +7,7 @@
 <h3>Kalkulator kredytowy</h2>
 
 
-<form class="pure-form pure-form-stacked" action="{$conf->app_url}/app/calc.php" method="post">
+<form class="pure-form pure-form-stacked" action="{$conf->action_root}calcCompute" method="post">
 	<fieldset>
 	<label for="id_kwota">Kwota pozyczki: </label>
 	<input id="id_kwota" type="text" name="kwota" value="{$form->kwota}" /><br />

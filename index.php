@@ -5,4 +5,4 @@ require_once dirname(__FILE__).'/config.php';
 //header("Location: "._APP_URL."/app/calc_view.php");
 
 //przekazanie ĹĽÄ…dania do nastÄ™pnego dokumentu ("forward")
-include $conf->root_path.'/app/calc.php';
+include $conf->root_path.'/app/ctrl.php';
