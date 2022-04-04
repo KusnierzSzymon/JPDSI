@@ -1,9 +1,7 @@
 <?php
 
-require_once $conf->root_path.'/lib/smarty/Smarty.class.php';
-require_once $conf->root_path.'/lib/Messages.class.php';
-require_once $conf->root_path.'/app/CalcForm.class.php';
-require_once $conf->root_path.'/app/CalcResult.class.php';
+require_once 'CalcForm.class.php';
+require_once 'CalcResult.class.php';
 
 
 class CalcCtrl {
@@ -24,9 +22,9 @@ class CalcCtrl {
 
 
 public function getParams(){
-	$this->form->kwota = isset($_REQUEST['kwota']) ? $_REQUEST['kwota'] : null;
-	$this->form->oprocentowanie = isset($_REQUEST['oprocentowanie']) ? $_REQUEST['oprocentowanie'] : null;
-	$this->form->czas = isset($_REQUEST['czas']) ? $_REQUEST['czas'] : null;	
+	$this->form->x = getFromRequest('kwota');
+		$this->form->y = getFromRequest('oprocentowanie');
+		$this->form->op = getFromRequest('czas');
 }
 
 
@@ -99,22 +97,18 @@ function process(){
 }
 
 public function generateView(){
-global $conf;
 
 
-$smarty = new Smarty();
-$smarty->assign('conf',$conf);
+
+getSmarty()->assign('page_title','Kalkulator');
+getSmarty()->assign('page_description','Profesjonalne szablonowanie kalkulatora oparte na bibliotece Smarty');
+getSmarty()->assign('page_header','Kalkulator kredytowy');
 
 
-$smarty->assign('page_title','Kalkulator');
-$smarty->assign('page_description','Profesjonalne szablonowanie kalkulatora oparte na bibliotece Smarty');
-$smarty->assign('page_header','Kalkulator kredytowy');
+		getSmarty()->assign('form',$this->form);
+		getSmarty()->assign('wynik',$this->wynik);
 
-$smarty->assign('msgs',$this->msgs);
-		$smarty->assign('form',$this->form);
-		$smarty->assign('wynik',$this->wynik);
-
-$smarty->display($conf->root_path.'/app/CalcView.html');
+getSmarty()->display('CalcView.html');
 
 }
 

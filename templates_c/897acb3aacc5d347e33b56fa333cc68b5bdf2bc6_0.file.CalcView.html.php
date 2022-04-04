@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.1.0, created on 2022-03-29 00:21:15
-  from 'C:\xampp\htdocs\Kalkulator_01\app\CalcView.html' */
+/* Smarty version 4.1.0, created on 2022-04-04 23:31:17
+  from 'C:\xampp\htdocs\Kalkulator_01\app\view\CalcView.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.1.0',
-  'unifunc' => 'content_624234db59f792_47964805',
+  'unifunc' => 'content_624b63a551c6d5_16505612',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    'f594044f3e0577d99e86c85d0ea173a9b2daeae3' => 
+    '897acb3aacc5d347e33b56fa333cc68b5bdf2bc6' => 
     array (
-      0 => 'C:\\xampp\\htdocs\\Kalkulator_01\\app\\CalcView.html',
-      1 => 1648506061,
+      0 => 'C:\\xampp\\htdocs\\Kalkulator_01\\app\\view\\CalcView.html',
+      1 => 1649105647,
       2 => 'file',
     ),
   ),
@@ -20,30 +20,30 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_624234db59f792_47964805 (Smarty_Internal_Template $_smarty_tpl) {
+function content_624b63a551c6d5_16505612 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, true);
 ?>
 
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_1735300249624234db592d59_36747246', 'footer');
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_1531253394624b63a550a170_21300063', 'footer');
 ?>
 
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_990274885624234db593527_34906322', 'content');
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_834842494624b63a550b460_07189679', 'content');
 ?>
 
-<?php $_smarty_tpl->inheritance->endChild($_smarty_tpl, ($_smarty_tpl->tpl_vars['conf']->value->root_path).("/templates/main.html"));
+<?php $_smarty_tpl->inheritance->endChild($_smarty_tpl, "main.html");
 }
 /* {block 'footer'} */
-class Block_1735300249624234db592d59_36747246 extends Smarty_Internal_Block
+class Block_1531253394624b63a550a170_21300063 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'footer' => 
   array (
-    0 => 'Block_1735300249624234db592d59_36747246',
+    0 => 'Block_1531253394624b63a550a170_21300063',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -53,12 +53,12 @@ przykladowa tresc stopki wpisana do szablonu glownego z szablonu kalkulatora<?ph
 }
 /* {/block 'footer'} */
 /* {block 'content'} */
-class Block_990274885624234db593527_34906322 extends Smarty_Internal_Block
+class Block_834842494624b63a550b460_07189679 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'content' => 
   array (
-    0 => 'Block_990274885624234db593527_34906322',
+    0 => 'Block_834842494624b63a550b460_07189679',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
