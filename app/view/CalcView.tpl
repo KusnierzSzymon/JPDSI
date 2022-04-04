@@ -1,4 +1,4 @@
-{extends file="main.html"}
+{extends file="main.tpl"}
 
 {block name=footer}przykladowa tresc stopki wpisana do szablonu glownego z szablonu kalkulatora{/block}
 
