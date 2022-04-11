@@ -1,30 +1,41 @@
 <?php
-// Skrypt kontrolera gĹ‚Ăłwnego uruchamiajÄ…cy okreĹ›lonÄ…
-// akcjÄ™ uĹĽytkownika na podstawie przekazanego parametru
-
-//kaĹĽdy punkt wejĹ›cia aplikacji (skrypt uruchamiany bezpoĹ›rednio przez klienta) musi doĹ‚Ä…czaÄ‡ konfiguracjÄ™
-// - w tym wypadku jest juĹĽ tylko jeden punkt wejĹ›cia do aplikacji - skrypt ctrl.php
 require_once 'init.php';
+// Brak zmian - init inicjuje system i przygotowuje dokĹ‚adnie to co w projekcie 6b.
+// Jets zatem nowa struktura, przestrzenie nazw i pomocnicze obiekty i funkcje.
 
-//1. pobierz nazwÄ™ akcji
+// PoniĹĽej wybĂłr akcji pobranej jako parametr z ĹĽÄ…dania (zmienna $action inicjowana automatycznie w init.php)
 
+// ZauwaĹĽmy, iĹĽ w wybranych akcjach zawarto kontrolÄ™ dostÄ™pu
+// (check.php, ajk w projekcie nr 2, przekierowuje na stronÄ™ logowania jeĹ›li uĹĽytkownik nie jest zalogowany)
+// PozostaĹ‚e akcje sÄ… publiczne, czyli nie wymagajÄ… logowania, dlatego brak w nich check.php (sÄ… to: login oraz action1)
 
-
-//2. wykonanie akcji
 switch ($action) {
-	default : // 'calcView'
-	    // zaĹ‚aduj definicjÄ™ kontrolera
+	default : // 'calcView'  // akcja NIEPUBLICZNA
+		include 'check.php'; // KONTROLA
 		$ctrl = new app\controllers\CalcCtrl();
 		$ctrl->generateView ();
 	break;
-	case 'calcCompute' :
-		// zaĹ‚aduj definicjÄ™ kontrolera
+	case 'login': // akcja PUBLICZNA - brak check.php
+		$ctrl = new app\controllers\LoginCtrl();
+		$ctrl->doLogin();
+	break;
+	case 'calcCompute' : // akcja NIEPUBLICZNA
+		include 'check.php';  // KONTROLA
 		$ctrl = new app\controllers\CalcCtrl();
 		$ctrl->process ();
-	case 'action1' :
-		// zrĂłb coĹ› innego ...
 	break;
-	case 'action2' :
-		// zrĂłb coĹ› innego ...
+	case 'logout' : // akcja NIEPUBLICZNA
+		include 'check.php';  // KONTROLA
+		$ctrl = new app\controllers\LoginCtrl();
+		$ctrl->doLogout();
+	break;
+	case 'action1' : // akcja PUBLICZNA - brak check.php
+		// zrĂłb coĹ› innego publicznego ...
+		print('reakcja na akcjÄ™ publicznÄ… ....');
+	break;
+	case 'action2': // akcja NIEPUBLICZNA
+		include 'check.php';  // KONTROLA
+		// zrĂłb coĹ› innego wymagajÄ…cego logowania ...
+		print('reakcja na akcjÄ™ niepublicznÄ… ....');
 	break;
 }

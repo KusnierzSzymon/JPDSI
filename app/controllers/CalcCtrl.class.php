@@ -7,7 +7,7 @@ use app\transfer\CalcResult;
 
 class CalcCtrl {
     
-    private $msgs;   //wiadomoĹ›ci dla widoku
+    
 	private $form;   //dane formularza (do obliczeĹ„ i dla widoku)
 	private $wynik;
         
@@ -23,9 +23,9 @@ class CalcCtrl {
 
 
 public function getParams(){
-	$this->form->x = getFromRequest('kwota');
-		$this->form->y = getFromRequest('oprocentowanie');
-		$this->form->op = getFromRequest('czas');
+	$this->form->kwota = getFromRequest('kwota');
+		$this->form->oprocentowanie = getFromRequest('oprocentowanie');
+		$this->form->czas = getFromRequest('czas');
 }
 
 
@@ -38,32 +38,32 @@ if ( ! (isset($this->form->kwota) && isset($this->form->oprocentowanie) && isset
 
 // sprawdzenie, czy potrzebne wartoĹ›ci zostaĹ‚y przekazane
 if ( $this->form->kwota == "") {
-	$this->msgs->addError('Nie podano kwoty kredytu');
+	getMessages()->addError('Nie podano kwoty kredytu');
 }
 if ( $this->form->czas == "") {
-	$this->msgs->addError('Nie podano liczby miesiecy');
+	getMessages()->addError('Nie podano liczby miesiecy');
 }
 if ( $this->form->oprocentowanie == "") {
-	$this->msgs->addError('Nie podano oprocentowania');
+	getMessages()->addError('Nie podano oprocentowania');
 }
 
 //nie ma sensu walidowaÄ‡ dalej gdy brak parametrĂłw
-if (! $this->msgs->isError()) {
+if (! getMessages()->isError()) {
 	
 	// sprawdzenie, czy $x i $y sÄ… liczbami caĹ‚kowitymi
 	if (! is_numeric( $this->form->kwota )) {
-		$this->msgs->addError('Pierwsza wartosc nie jest liczba calkowita');
+		getMessages()->addError('Pierwsza wartosc nie jest liczba calkowita');
 	}
 	
 	if (! is_numeric( $this->form->oprocentowanie )) {
-		$this->msgs->addError('Druga wartosc nie jest liczba calkowita ');
+		getMessages()->addError('Druga wartosc nie jest liczba calkowita ');
 	}
         if (! is_numeric( $this->form->czas )) {
-		$this->msgs->addError('Druga wartosc nie jest liczba calkowita…');
+		getMessages()->addError('Druga wartosc nie jest liczba calkowita…');
 	}
 }
         
-       return ! $this->msgs->isError();
+       return ! getMessages()->isError();
        
        
 }
@@ -75,7 +75,7 @@ if (! $this->msgs->isError()) {
 
 function process(){
     
-    $this->getparams();
+    $this->getParams();
     
     if ($this->validate()) {
 	
@@ -85,12 +85,13 @@ function process(){
 	$this->form->oprocentowanie = floatval($this->form->oprocentowanie);
 	$this->form->czas = intval($this->form->czas);
         $this->form->oprocentowanie = round($this->form->oprocentowanie,2);
+        getMessages()->addInfo('Parametry poprawne.');
 	
        
        $this->wynik->wynik = ($this->form->kwota + $this->form->kwota * ($this->form->oprocentowanie/100)) / (12 * $this->form->czas);
        $this->wynik->wynik = round($this->wynik->wynik,2);
 
-       $this->msgs->addInfo('Wykonano obliczenia.');
+       getMessages()->addInfo('Wykonano obliczenia.');
        
     }
     
@@ -98,14 +99,14 @@ function process(){
 }
 
 public function generateView(){
-
+global $user;
 
 
 getSmarty()->assign('page_title','Kalkulator');
 getSmarty()->assign('page_description','Profesjonalne szablonowanie kalkulatora oparte na bibliotece Smarty');
 getSmarty()->assign('page_header','Kalkulator kredytowy');
 
-
+                getSmarty()->assign('user',$user);
 		getSmarty()->assign('form',$this->form);
 		getSmarty()->assign('wynik',$this->wynik);
 
