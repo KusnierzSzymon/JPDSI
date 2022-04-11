@@ -1,5 +1,5 @@
 {if $msgs->isError()}
-<div class="messages err">
+<div class="messages error">
 	<ol>
 	{foreach $msgs->getErrors() as $err}
 	{strip}
@@ -10,7 +10,7 @@
 </div>
 {/if}
 {if $msgs->isInfo()}
-<div class="messages inf bottom-margin">
+<div class="messages info bottom-margin">
 	<ol>
 	{foreach $msgs->getInfos() as $inf}
 	{strip}

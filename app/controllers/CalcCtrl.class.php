@@ -99,14 +99,14 @@ function process(){
 }
 
 public function generateView(){
-global $user;
+
 
 
 getSmarty()->assign('page_title','Kalkulator');
 getSmarty()->assign('page_description','Profesjonalne szablonowanie kalkulatora oparte na bibliotece Smarty');
 getSmarty()->assign('page_header','Kalkulator kredytowy');
 
-                getSmarty()->assign('user',$user);
+                getSmarty()->assign('user',unserialize($_SESSION['user']));
 		getSmarty()->assign('form',$this->form);
 		getSmarty()->assign('wynik',$this->wynik);
 

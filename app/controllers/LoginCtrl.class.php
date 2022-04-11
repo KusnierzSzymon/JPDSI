@@ -23,7 +23,7 @@ class LoginCtrl{
 		// sprawdzenie, czy parametry zostaĹ‚y przekazane
 		if (! (isset ( $this->form->login ) && isset ( $this->form->pass ))) {
 			// sytuacja wystÄ…pi kiedy np. kontroler zostanie wywoĹ‚any bezpoĹ›rednio - nie z formularza
-			getMessages()->addError('BĹ‚Ä™dne wywoĹ‚anie aplikacji !');
+			return false;
 		}
 			
 			// nie ma sensu walidowaÄ‡ dalej, gdy brak parametrĂłw
@@ -52,7 +52,8 @@ class LoginCtrl{
 				//$_SESSION['user_login'] = $user->login;
 				//$_SESSION['user_role'] = $user->role;
 				// LUB moĹĽna zapisaÄ‡ or razu caĹ‚y obiekt, ale trzeba go zserializowaÄ‡
-				$_SESSION['user'] = serialize($user);				
+				$_SESSION['user'] = serialize($user);
+                                addRole($user->role);
 			} else if ($this->form->login == "user" && $this->form->pass == "user") {
 				if (session_status() == PHP_SESSION_NONE) {
 					session_start();
@@ -62,7 +63,8 @@ class LoginCtrl{
 				//$_SESSION['user_login'] = $user->login;
 				//$_SESSION['user_role'] = $user->role;
 				// LUB caĹ‚ego obiekt, po serializacji
-				$_SESSION['user'] = serialize($user);				
+				$_SESSION['user'] = serialize($user);
+                                addRole($user->role);
 			} else {
 				getMessages()->addError('Niepoprawny login lub hasĹ‚o');
 			}
@@ -86,10 +88,8 @@ class LoginCtrl{
 	}
 	
 	public function doLogout(){
-		// 1. zakoĹ„czenie sesji
-		if (session_status() == PHP_SESSION_NONE) {
-			session_start();
-		}
+		
+		
 		session_destroy();
 		
 		// 2. wyĹ›wietl stronÄ™ logowania z informacjÄ…
